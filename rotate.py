@@ -2,8 +2,12 @@ import time
 from gpiozero import Button
 
 # Replace these with your GPIO pin connections.
-PIN_A = 20
+# ... 
+# ...    [31]  [33]    [35]    [37]    [39]
+# ...    ....  gpio13  gpio19  gpio26  gnd
+PIN_A = 19
 PIN_B = 26
+PIN_SELECT = 13
 
 class App():
     """
@@ -14,12 +18,25 @@ class App():
         self.button_a = Button(PIN_A, pull_up=True)
         self.button_b = Button(PIN_B, pull_up=True)
         self.button_a.when_activated=self.pin_a
-        
+
+        # center button. Use button class to debounce
+        self.select = Button(PIN_SELECT, pull_up=True)
+        self.select.when_pressed = self.selected
+
     def pin_a(self, b):
+        """
+        This is called when user rotate the encoder
+        """
         if not self.button_b.is_pressed:
             print('Up')
         else:
             print('Down')
+
+    def selected(self):
+        """
+        This is called when the center button is pressed.
+        """
+        print('selected')
 
     def rotation_sequence(self):
         '''
