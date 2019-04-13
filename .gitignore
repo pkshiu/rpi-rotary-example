@@ -1,0 +1,8 @@
+# Basics
+*.py[cod]
+*.pyc
+__pycache__
+
+# Editors
+*~
+*.sublime-*
